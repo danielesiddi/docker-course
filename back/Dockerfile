@@ -10,4 +10,4 @@ COPY app.py /app.py
 
 CMD python3 app.py run --host=0.0.0.0
 
-EXPOSE 80
+EXPOSE 5000
