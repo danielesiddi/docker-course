@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  back:
+    build: ./back
+    command: python app.py
+    ports:
+      - "9000:80"
+    networks:
+      - front-tier
+      - back-tier
+
+  front:
+    build: ./front
+    command: nodemon server.js
+    volumes:
+      - ./result:/app
+    ports:
+      - "5001:80"
+      - "5858:5858"
+    networks:
+      - front-tier
+      - back-tier
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
