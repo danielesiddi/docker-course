@@ -1,6 +1,14 @@
 version: "3"
 
 services:
+  db:
+    image: mysql:5.7
+    container_name: db
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+    networks:
+      - back-tier
+
   back:
     build: ./back
     command: python app.py
@@ -22,16 +30,8 @@ services:
       - front-tier
       - back-tier
 
-  db:
-    image: mysql:5.7
-    container_name: db
-    volumes:
-      - "mysql-data:/var/lib/mysql"
-    networks:
-      - back-tier
-
 volumes:
-  db-data:
+  mysql-data:
 
 networks:
   front-tier:
