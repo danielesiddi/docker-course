@@ -1,3 +1,9 @@
-FROM ubuntu:latest
+FROM node:11-alpine
 
-CMD /bin/bash
+RUN npm install express simple-html-template
+
+COPY app.js /app.js
+
+CMD node app.js
+
+EXPOSE 3000
