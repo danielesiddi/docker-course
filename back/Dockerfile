@@ -8,6 +8,6 @@ RUN pip3 install flask-mysql
 
 COPY app.py /app.py
 
-CMD python3 app.py run --host=0.0.0.0
+CMD python3 app.py -v
 
 EXPOSE 5000
