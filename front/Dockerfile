@@ -1,6 +1,6 @@
 FROM node:11-alpine
 
-RUN npm install express simple-html-template request
+RUN npm install express sync-request
 
 COPY app.js /app.js
 

@@ -84,4 +84,4 @@ if __name__ == "__main__":
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    app.run(port=6000)
+    app.run(port=6000,host='0.0.0.0')
