@@ -10,4 +10,4 @@ COPY app.py /app.py
 
 CMD python3 app.py -v
 
-EXPOSE 5000
+EXPOSE 6000

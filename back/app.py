@@ -41,7 +41,7 @@ def add_user():
     logging.debug("Function add_user called with body payload {}".format(request.json))
     name=request.json['name']
     try:
-        data=cursor.execute("INSERT INTO employees (name) VALUES ('{}')".format(name))
+        data=cursor.execute("INSERT INTO employees (name) VALUES ('{}');".format(name))
         logging.debug(data)
     except:
         logging.error("Error in add_user function")
@@ -84,4 +84,4 @@ if __name__ == "__main__":
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    app.run()
+    app.run(port=6000)
