@@ -1,34 +1,45 @@
 version: "3"
 
 services:
+  back:
+    build: ./back
+    #command: python app.py -v
+    ports:
+      - "6000:6000"
+    networks:
+      - front-tier
+      - back-tier
+    environment:
+      - MYSQL_DATABASE_HOST=db
+      - MYSQL_DATABASE_USER=root
+      - MYSQL_DATABASE_PASSWORD=K4ir0s
+    depends_on:
+      - db
+
   db:
     image: mysql:5.7
     container_name: db
     volumes:
       - "mysql-data:/var/lib/mysql"
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/:ro
     networks:
       - back-tier
-
-  back:
-    build: ./back
-    command: python app.py
     ports:
-      - "9000:80"
-    networks:
-      - front-tier
-      - back-tier
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=K4ir0s
+    
 
   front:
     build: ./front
-    command: nodemon server.js
-    volumes:
-      - ./result:/app
+    #command: node app.js
     ports:
-      - "5001:80"
-      - "5858:5858"
+      - "3000:3000"
     networks:
       - front-tier
       - back-tier
+    environment:
+      - BACKEND_HOSTNAME=back:6000
 
 volumes:
   mysql-data:
