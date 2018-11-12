@@ -13,6 +13,7 @@ services:
       - MYSQL_DATABASE_HOST=db
       - MYSQL_DATABASE_USER=root
       - MYSQL_DATABASE_PASSWORD=K4ir0s
+    restart: on-failure
     depends_on:
       - db
 
