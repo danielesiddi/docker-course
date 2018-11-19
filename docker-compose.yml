@@ -1,6 +1,27 @@
 version: "3"
 
 services:
+  db:
+    image: mariadb:10.4
+    container_name: db
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - back-tier
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=K4ir0s
+    
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - back-tier
+
   back:
     build: ./back
     #command: python app.py -v
@@ -17,19 +38,6 @@ services:
     depends_on:
       - db
 
-  db:
-    image: mysql:5.7
-    container_name: db
-    volumes:
-      - "mysql-data:/var/lib/mysql"
-      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/:ro
-    networks:
-      - back-tier
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=K4ir0s
-    
 
   front:
     build: ./front
@@ -43,7 +51,7 @@ services:
       - BACKEND_HOSTNAME=back:6000
 
 volumes:
-  mysql-data:
+  db-data:
 
 networks:
   front-tier:
