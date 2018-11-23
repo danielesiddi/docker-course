@@ -43,6 +43,7 @@ def add_user():
     try:
         data=cursor.execute("INSERT INTO employees (name) VALUES ('{}');".format(name))
         logging.debug(data)
+        conn.commit()
     except:
         logging.error("Error in add_user function")
         return json.dumps({'success': False})
@@ -56,6 +57,7 @@ def set_user(user_id):
     name=request.json['name']
     try:
         cursor.execute("UPDATE employees SET name='{}' WHERE id='{}'".format(name, user_id))
+        conn.commit()
     except:
         logging.error("Error in set_user function")
         return json.dumps({'success': False})
