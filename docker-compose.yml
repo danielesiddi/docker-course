@@ -6,7 +6,7 @@ services:
     container_name: db
     volumes:
       - db-data:/var/lib/mysql
-      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/:ro
+      - ./db:/docker-entrypoint-initdb.d/:ro
     networks:
       - back-tier
     ports:
