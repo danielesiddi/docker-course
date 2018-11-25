@@ -46,7 +46,6 @@ services:
       - "3000:3000"
     networks:
       - front-tier
-      - back-tier
     environment:
       - BACKEND_HOSTNAME=back:6000
 
