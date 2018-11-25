@@ -254,7 +254,7 @@ Ejecutamos:
   docker-compose ps
   docker ps
 ```
-Podemos comprobar que tenemos servidor de node, de python y de mongo corriendo, más un cuarto llamado adminer, entrando en [http:localhost:3000] nos esperamos de ver la respuesta en nuestro navegador.
+Podemos comprobar que tenemos servidor de node, de python y de mariadb corriendo, más un cuarto llamado adminer, entrando en [http:localhost:3000] nos esperamos de ver la respuesta en nuestro navegador.
 
 Podemos parar y borrar todos los contenedores de una vez.
 
