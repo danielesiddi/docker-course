@@ -1,0 +1,55 @@
+{
+  "kind": "DeploymentConfig",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "docker/db"
+  },
+  "spec": {
+    "template": { 
+      "metadata": {
+        "labels": {
+          "name": "docker/db"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "docker/db",
+            "image": "mariadb:10.4",
+            "ports": [
+              {
+                "containerPort": 3306,
+                "protocol": "TCP"
+              }
+            ]
+          }
+        ]
+      }
+    }
+    "replicas": 1, 
+    "selector": {
+      "name": "docker/db"
+    },
+    "triggers": [
+      {
+        "type": "ConfigChange" 
+      },
+      {
+        "type": "ImageChange", 
+        "imageChangeParams": {
+          "automatic": true,
+          "containerNames": [
+            "docker/db"
+          ],
+          "from": {
+            "kind": "ImageStreamTag",
+            "name": "origin-ruby-sample:latest"
+          }
+        }
+      }
+    ],
+    "strategy": { 
+      "type": "Rolling"
+    }
+  }
+}
