@@ -7,7 +7,12 @@ app.get_users = function() {
 
   users_url='http://' + process.env.BACKEND_HOSTNAME + '/users'
   console.log('Getting users from URL: ' + users_url)
-  var res = request('GET',users_url);
+  try {
+    var res = request('GET',users_url);
+  } catch(err) {
+    console.log('ERROR server not ready. Exiting ...')
+    process.exit(199)
+  }
 
   if(res.statusCode == 200) {
 
