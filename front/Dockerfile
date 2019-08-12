@@ -1,9 +1,31 @@
-FROM node:11-alpine
+# front-builder
+FROM openshift/base-centos7
+
+LABEL maintainer="Daniele Siddi <daniele.siddi@kairosds.com>"
+
+ENV BUILDER_VERSION 1.0
+
+LABEL io.k8s.description="Docker course front builder or Openshift" \
+      io.k8s.display-name="builder course-front" \
+      io.openshift.expose-services="3000:http" \
+      io.openshift.tags="builder,docker-course,front"
+
+
+#RUN yum install epel-release -y
+#RUN yum update -y
+RUN yum install -y gcc-c++ make && curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+RUN yum install -y nodejs && yum clean all -y
 
 RUN npm install express sync-request
 
-COPY app.js /app.js
+# sets io.openshift.s2i.scripts-url label that way, or update that label
+COPY ./s2i/bin/ /usr/libexec/s2i
 
-CMD node app.js
+RUN chown -R 1001:1001 /opt/app-root
+
+# This default user is created in the openshift/base-centos7 image
+USER 1001
 
 EXPOSE 3000
+
+CMD ["/usr/libexec/s2i/usage"]
