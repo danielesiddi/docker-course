@@ -1,0 +1,94 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: '2019-08-10T06:52:44Z'
+  generation: 6
+  labels:
+    app: db
+  name: db
+  namespace: docker-course
+  resourceVersion: '305155'
+  selfLink: /apis/apps.openshift.io/v1/namespaces/docker-course/deploymentconfigs/db
+  uid: 744da66a-bb3b-11e9-b40f-5254007b974b
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: db
+    deploymentconfig: db
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: db
+        deploymentconfig: db
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: mysql-password
+          image: 'docker-registry.default.svc:5000/docker-course/db:latest'
+          imagePullPolicy: Always
+          name: db
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: volume-1yvs5
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: volume-1yvs5
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+  test: false
+  triggers:
+    - type: ConfigChange
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2019-08-10T07:51:35Z'
+      lastUpdateTime: '2019-08-10T07:51:37Z'
+      message: replication controller "db-6" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: 'True'
+      type: Progressing
+    - lastTransitionTime: '2019-08-13T05:13:15Z'
+      lastUpdateTime: '2019-08-13T05:13:15Z'
+      message: Deployment config has minimum availability.
+      status: 'True'
+      type: Available
+  details:
+    causes:
+      - type: Manual
+    message: manual change
+  latestVersion: 6
+  observedGeneration: 6
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1

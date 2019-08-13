@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  MYSQL_DATABASE_HOST: 172.30.233.165
+  MYSQL_DATABASE_USER: root
+kind: ConfigMap
+metadata:
+  creationTimestamp: '2019-08-10T07:16:36Z'
+  name: back-conf
+  namespace: docker-course
+  resourceVersion: '266003'
+  selfLink: /api/v1/namespaces/docker-course/configmaps/back-conf
+  uid: ca4981af-bb3e-11e9-b40f-5254007b974b
