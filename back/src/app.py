@@ -29,8 +29,9 @@ def get_user(user_id):
     try:
         user=cursor.execute("SELECT * FROM employees WHERE id={}".format(user_id))
         logging.debug(user)
-    except:
-        return json.dumps({'success': False})
+    except Exception as e:
+        logging.error("Error in get_user function")
+        return json.dumps({'success': False, error: e})
     if not user:
         logging.error("User not found")
         return json.dumps({'success': False})
@@ -44,9 +45,9 @@ def add_user():
         data=cursor.execute("INSERT INTO employees (name) VALUES ('{}');".format(name))
         logging.debug(data)
         conn.commit()
-    except:
+    except Exception as e:
         logging.error("Error in add_user function")
-        return json.dumps({'success': False})
+        return json.dumps({'success': False, error: e})
 
     logging.info("User {} added successfully".format(name))
     return json.dumps({'success': True})
@@ -58,9 +59,9 @@ def set_user(user_id):
     try:
         cursor.execute("UPDATE employees SET name='{}' WHERE id='{}'".format(name, user_id))
         conn.commit()
-    except:
+    except Exception as e:
         logging.error("Error in set_user function")
-        return json.dumps({'success': False})
+        return json.dumps({'success': False, error: e})
 
     logging.info("User {} successfully renamed to {}".format(user_id, name))
     return json.dumps({'success': True})
@@ -73,9 +74,9 @@ def get_users():
         return json.dumps({'success': True, 'result': data})
         #for row in data:
         #    result.append({'id': row[0], 'name': row[1]})
-    except:
-        return json.dumps({'success': False})
-    return json.dumps({'success': True, 'result': result})
+    except Exception as e:
+        logging.error("Error in get_users function")
+        return json.dumps({'success': False, error: e})
 
 if __name__ == "__main__":
     
