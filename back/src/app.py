@@ -31,7 +31,7 @@ def get_user(user_id):
         logging.debug(user)
     except Exception as e:
         logging.error("Error in get_user function")
-        return json.dumps({'success': False, error: e})
+        return json.dumps({'success': False, 'error': e})
     if not user:
         logging.error("User not found")
         return json.dumps({'success': False})
@@ -47,7 +47,7 @@ def add_user():
         conn.commit()
     except Exception as e:
         logging.error("Error in add_user function")
-        return json.dumps({'success': False, error: e})
+        return json.dumps({'success': False, 'error': e})
 
     logging.info("User {} added successfully".format(name))
     return json.dumps({'success': True})
@@ -61,7 +61,7 @@ def set_user(user_id):
         conn.commit()
     except Exception as e:
         logging.error("Error in set_user function")
-        return json.dumps({'success': False, error: e})
+        return json.dumps({'success': False, 'error': e})
 
     logging.info("User {} successfully renamed to {}".format(user_id, name))
     return json.dumps({'success': True})
@@ -76,7 +76,7 @@ def get_users():
         #    result.append({'id': row[0], 'name': row[1]})
     except Exception as e:
         logging.error("Error in get_users function")
-        return json.dumps({'success': False, error: e})
+        return json.dumps({'success': False, 'error': e})
 
 if __name__ == "__main__":
     
